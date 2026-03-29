@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>FastLane — BEFAST Assessment</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700;800&family=IBM+Plex+Sans:wght@300;400;500;600;700;800&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  /* Primary — dark forest green */
+  --p900:#091710;
+  --p800:#0D2218;
+  --p700:#133020;
+  --p600:#1A4530;
+  --p500:#246040;
+  --p400:#2E8055;
+  --p300:#3DA06C;
+  --p200:#72C497;
+  --p100:#C0E8D2;
+  --p50 :#EAF7F0;
+
+  /* Amber — eyebrow labels */
+  --amber:#F59E0B;
+
+  /* Accent — orange */
+  --a600:#B84400;
+  --a500:#E05614;
+  --a400:#F47034;
+  --a300:#F9956A;
+  --a100:#FDE8D8;
+  --a50 :#FEF5EE;
+
+  /* Neutral */
+  --n900:#0D1F16;
+  --n700:#2C4838;
+  --n500:#5E8A72;
+  --n300:#A8C9B8;
+  --n200:#D4E8DC;
+  --n100:#EAF3EE;
+  --n50 :#F4FAF7;
+  --white:#FFFFFF;
+
+  /* Severity */
+  --sev-low-text :#166534;
+  --sev-low-bg   :#DCFCE7;
+  --sev-low-color:#22C55E;
+  --sev-mod-text :#854D0E;
+  --sev-mod-bg   :#FEF9C3;
+  --sev-mod-color:#FACC15;
+  --sev-high-text:#991B1B;
+  --sev-high-bg  :#FEE2E2;
+  --sev-high-color:#EF4444;
+}
+
+html,body{
+  font-family:'Noto Sans Thai','IBM Plex Sans',system-ui,sans-serif;
+  --font-heading:'Bricolage Grotesque','IBM Plex Sans',system-ui,sans-serif;
+  background:#1A1A1A;
+  min-height:100vh;
+  display:flex;justify-content:center;align-items:flex-start;
+  padding:32px 0 60px;
+}
+
+.phone{
+  width:393px;
+  background:var(--white);
+  border-radius:44px;
+  overflow:hidden;
+  box-shadow:0 40px 120px rgba(0,0,0,.7);
+}
+
+.screen{display:none}
+.screen.active{display:block}
+
+/* ═══════════════════════════════
+   HOME SCREEN
+═══════════════════════════════ */
+
+/* Hero */
+.hero{
+  background:linear-gradient(175deg, var(--p700) 0%, var(--p800) 50%, var(--p900) 100%);
+  padding:56px 24px 36px;
+}
+.hero-brand{
+  display:flex;align-items:center;gap:8px;margin-bottom:28px;
+}
+.hero-brand-name{
+  font-size:17px;font-weight:700;color:var(--white);letter-spacing:-.2px;
+}
+.hero-brand-icon{
+  width:22px;height:22px;
+  display:flex;align-items:center;justify-content:center;
+  color:rgba(255,255,255,.7);
+}
+
+.hero-h1{
+  font-family:var(--font-heading);
+  font-size:40px;font-weight:800;color:var(--white);
+  line-height:1.05;letter-spacing:-1px;margin-bottom:4px;
+}
+.hero-h2{
+  font-family:var(--font-heading);
+  font-size:36px;font-weight:800;color:var(--a500);
+  line-height:1.1;letter-spacing:-1px;margin-bottom:14px;
+}
+.hero-sub{
+  font-size:13px;color:rgba(255,255,255,.55);line-height:1.6;margin-bottom:28px;max-width:280px;
+}
+.btn-start{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--p400);color:var(--white);
+  font-family:inherit;font-size:15px;font-weight:600;
+  border:none;border-radius:100px;padding:13px 22px;
+  cursor:pointer;
+  transition:background .15s,transform .1s;
+}
+.btn-start:hover{background:var(--p300)}
+.btn-start:active{transform:scale(.97)}
+
+/* BEFAST section */
+.befast-section{background:var(--white);padding:28px 20px 24px}
+.sec-eyebrow{
+  font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--amber);margin-bottom:6px;
+}
+.sec-title{font-size:19px;font-weight:700;color:var(--n900);margin-bottom:4px}
+.sec-sub{font-size:13px;color:var(--n500);line-height:1.55;margin-bottom:18px}
+
+.bf-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.bf-card{
+  background:var(--white);border-radius:16px;
+  padding:18px 10px 14px;text-align:center;
+  box-shadow:0 0 0 1.5px var(--n200);
+}
+.bf-letter{
+  font-size:32px;font-weight:800;color:var(--p500);line-height:1;margin-bottom:6px;
+  letter-spacing:-1px;
+}
+.bf-word{font-size:11px;font-weight:600;color:var(--n500);text-transform:uppercase;letter-spacing:.04em}
+
+/* How It Works */
+.how-section{background:var(--p50);padding:28px 20px 28px}
+.steps{display:flex;flex-direction:column;gap:10px;margin-top:16px}
+.step-row{
+  display:flex;align-items:flex-start;gap:14px;
+  background:var(--white);border-radius:16px;padding:16px;
+  box-shadow:0 1px 3px rgba(0,0,0,.05);
+}
+.step-num{
+  width:36px;height:36px;flex-shrink:0;
+  background:var(--n900);border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:700;color:var(--white);letter-spacing:.02em;
+}
+.step-body h4{font-size:14px;font-weight:700;color:var(--n900);margin-bottom:3px}
+.step-body p{font-size:12px;color:var(--n500);line-height:1.5}
+
+/* Severity section */
+.sev-section{background:var(--n50);padding:28px 20px 28px}
+.sev-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.sev-card{border-radius:16px;padding:18px 14px 16px;text-align:center}
+.sev-icon{font-size:22px;margin-bottom:8px}
+.sev-score-name{font-size:13px;font-weight:700;margin-bottom:6px}
+.sev-desc{font-size:11px;line-height:1.5;opacity:.8}
+.sev-card.c0{background:#E8F7F0;color:#0D6B45;border:1.5px solid #A8DDBF}
+.sev-card.c1{background:#FEF9C3;color:#854D0E;border:1.5px solid #FDE68A}
+.sev-card.c2{background:#FFEDD5;color:#9A3412;border:1.5px solid #FED7AA}
+.sev-card.c3{background:#FEE2E2;color:#991B1B;border:1.5px solid #FECACA}
+
+/* Bottom CTA */
+.home-cta{
+  background:linear-gradient(175deg, var(--p700) 0%, var(--p900) 100%);
+  padding:32px 24px 48px;
+}
+.home-cta-eyebrow{
+  font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--p300);margin-bottom:10px;
+}
+.home-cta h3{
+  font-size:22px;font-weight:800;color:var(--white);line-height:1.3;margin-bottom:8px;
+}
+.home-cta h3 em{color:var(--a500);font-style:normal}
+.home-cta p{font-size:13px;color:rgba(255,255,255,.5);line-height:1.6;margin-bottom:24px}
+.btn-cta{
+  width:100%;background:var(--p400);color:var(--white);
+  font-family:inherit;font-size:15px;font-weight:600;
+  border:none;border-radius:100px;padding:15px;
+  cursor:pointer;text-align:center;
+  transition:background .15s;
+}
+.btn-cta:hover{background:var(--p300)}
+
+/* ═══════════════════════════════
+   QUIZ SCREEN
+═══════════════════════════════ */
+.quiz-hd{
+  background:var(--p800);
+  padding:14px 20px 16px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.quiz-brand{display:flex;align-items:center;gap:8px}
+.quiz-brand-name{font-size:16px;font-weight:700;color:var(--white)}
+.quiz-brand-icon{color:rgba(255,255,255,.75)}
+
+/* Quiz body */
+#s-quiz{min-height:852px}
+#s-quiz.active{display:flex;flex-direction:column}
+.quiz-body{flex:1;padding:20px 20px 0;background:#F4F9F7}
+.q-card{background:var(--white);border:1.5px solid #C0E8D2;border-radius:16px;padding:20px;margin-bottom:16px}
+
+.q-bulb{
+  width:40px;height:40px;background:var(--a100);
+  border-radius:12px;display:flex;align-items:center;justify-content:center;
+  margin-bottom:12px;color:var(--a500);
+}
+.q-screen-title{
+  font-family:'IBM Plex Sans Thai','IBM Plex Sans',system-ui,sans-serif;
+  font-size:22px;font-weight:700;color:var(--p500);margin-bottom:4px;
+}
+.q-screen-sub{font-size:13px;color:var(--n500);line-height:1.5;margin-bottom:16px}
+
+.q-progress-row{
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:10px;font-weight:700;letter-spacing:.06em;color:var(--n500);
+  margin-bottom:8px;
+}
+.q-progress-bar{height:3px;background:var(--n200);border-radius:100px;margin-bottom:20px;overflow:hidden}
+.q-progress-fill{height:100%;background:var(--p400);border-radius:100px;transition:width .4s cubic-bezier(.22,1,.36,1)}
+
+.q-steptag{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+  padding:5px 14px;border-radius:8px;margin-bottom:14px;
+  border:1.5px solid var(--amber);color:var(--amber);background:#FEF3C7;
+}
+.q-title{font-size:20px;font-weight:700;color:var(--n900);line-height:1.35;margin-bottom:22px}
+
+.opts{display:flex;flex-direction:column;gap:10px;margin-bottom:0}
+.opt{
+  display:block;
+  background:var(--white);border:1.5px solid var(--n200);
+  border-radius:14px;padding:15px 18px;
+  cursor:pointer;text-align:left;width:100%;font-family:inherit;
+  font-size:14px;font-weight:600;color:var(--n900);
+  transition:border-color .15s,background .15s;
+}
+.opt:hover{border-color:var(--p300);background:var(--p50)}
+.opt.sel{border-color:var(--p400);background:var(--p50);color:var(--p600)}
+
+.q-btns{display:flex;justify-content:space-between;gap:10px;padding:0 0 24px}
+.btn-back{
+  display:flex;align-items:center;gap:4px;
+  background:var(--white);color:var(--n700);
+  border:1.5px solid var(--n300);border-radius:100px;
+  padding:12px 20px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;
+  transition:background .15s;
+}
+.btn-back:hover{background:var(--n50)}
+.btn-next{
+  background:var(--p500);color:var(--white);
+  border:none;border-radius:100px;padding:13px 24px;
+  font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:4px;
+  transition:background .15s,transform .1s;
+}
+.btn-next:disabled{background:var(--n200);color:var(--n400);cursor:default}
+.btn-next:not(:disabled):hover{background:var(--p400)}
+.btn-next:not(:disabled):active{transform:scale(.98)}
+.quiz-footer{background:var(--p900);text-align:center;padding:14px;font-size:11px;font-weight:600;letter-spacing:.08em;color:rgba(255,255,255,.3)}
+
+/* ═══════════════════════════════
+   RESULTS SCREEN
+═══════════════════════════════ */
+/* Results header */
+#s-result{background:var(--n50)}
+.res-hd{background:var(--p800);padding:52px 20px 20px}
+.res-brand-r{font-family:var(--font-heading);font-size:18px;font-weight:700;color:var(--white)}
+
+/* Score card */
+.res-wrap{padding:16px;display:flex;flex-direction:column;gap:12px}
+.res-score-card{background:var(--p900);border-radius:20px;padding:20px}
+.res-score-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.res-score-eyebrow{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4)}
+.res-timer-badge{
+  font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  border:1.5px solid var(--amber);color:var(--amber);
+  border-radius:8px;padding:4px 10px;background:#FEF3C7;
+}
+.res-score-num{font-size:80px;font-weight:800;color:var(--white);line-height:1;letter-spacing:-4px}
+.res-score-sub{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-top:6px}
+
+/* Risk card */
+.risk-card{border-radius:16px;padding:16px 18px;display:flex;align-items:center;gap:14px;border:1.5px solid}
+.risk-card.minimal{background:#E8F7F0;border-color:#A8DDBF;color:#0D6B45}
+.risk-card.mod{background:var(--sev-mod-bg);border-color:#FDE68A;color:var(--sev-mod-text)}
+.risk-card.severe{background:#FFEDD5;border-color:#FED7AA;color:#9A3412}
+.risk-card.critical{background:var(--sev-high-bg);border-color:#FECACA;color:var(--sev-high-text)}
+.risk-icon-circle{width:38px;height:38px;flex-shrink:0;border-radius:100px;display:flex;align-items:center;justify-content:center}
+.risk-card.minimal .risk-icon-circle{background:#22C55E}
+.risk-card.mod .risk-icon-circle{background:#FACC15}
+.risk-card.severe .risk-icon-circle{background:#F97316}
+.risk-card.critical .risk-icon-circle{background:#EF4444}
+.risk-label{font-size:16px;font-weight:700;margin-bottom:3px}
+.risk-desc{font-size:12px;line-height:1.5;opacity:.85}
+
+/* Summary */
+.res-summary{background:var(--white);border-radius:16px;padding:16px}
+.res-summary-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.res-summary-title{font-size:15px;font-weight:700;color:var(--n900)}
+.res-count{font-size:13px;font-weight:700;color:var(--p500)}
+.sum-rows{display:flex;flex-direction:column}
+.sum-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--n100)}
+.sum-row:last-child{border-bottom:none}
+.sum-letter{
+  flex-shrink:0;border-radius:8px;
+  display:inline-flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;letter-spacing:.07em;
+  padding:4px 10px;
+  color:var(--amber);background:#FEF3C7;border:1.5px solid var(--amber);
+}
+.sum-q{flex:1;font-size:13px;font-weight:500;color:var(--n700);line-height:1.4}
+.sum-badge{font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px;flex-shrink:0;border:1.5px solid}
+.sum-badge.yes{border-color:#EF4444;color:#991B1B;background:#FEE2E2}
+.sum-badge.no{border-color:var(--p400);color:var(--p600);background:var(--p50)}
+.sum-badge.noted{border-color:var(--p300);color:var(--p500);background:transparent}
+
+/* Actions */
+.res-actions{padding:4px 0 8px}
+.btn-restart{
+  width:100%;background:transparent;color:var(--p500);
+  font-family:inherit;font-size:15px;font-weight:600;
+  border:1.5px solid var(--p400);border-radius:100px;padding:14px;
+  cursor:pointer;text-align:center;transition:background .15s;
+}
+.btn-restart:hover{background:var(--p50)}
+.res-footer-bar{
+  background:var(--p900);text-align:center;padding:14px;font-size:11px;font-weight:600;letter-spacing:.08em;color:rgba(255,255,255,.3);
+}
+</style>
+</head>
+<body>
+<div class="phone">
+
+<!-- ═══ HOME ═══ -->
+<div class="screen active" id="s-home">
+
+  <div class="hero">
+    <div class="hero-brand">
+      <span class="hero-brand-name">FastLane</span>
+      <span class="hero-brand-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+          <path d="M13 2L4.09 12.11A1 1 0 005 14h7l-1 8 8.91-10.11A1 1 0 0019 10h-7l1-8z" fill="currentColor"/>
+        </svg>
+      </span>
+    </div>
+    <p style="font-size:13px;color:rgba(255,255,255,.55);margin-bottom:20px;line-height:1.5">เครื่องมือคัดกรองสัญญาณโรคหลอดเลือดสมอง</p>
+    <h1 class="hero-h1">Act fast.</h1>
+    <div class="hero-h2">Every second<br>counts.</div>
+    <p style="font-size:13px;color:rgba(255,255,255,.65);line-height:1.6;margin-bottom:10px">ใช้แบบประเมิน BEFAST เพื่อช่วยเช็คอาการเบื้องต้นของโรคหลอดเลือดสมอง</p>
+    <p style="font-size:12px;color:rgba(255,255,255,.5);line-height:1.7;margin-bottom:28px">ยิ่งรู้เร็ว<br>ยิ่งช่วยลดความรุนแรงและเพิ่มโอกาสในการฟื้นตัว</p>
+    <button class="btn-start" onclick="startQuiz()">เริ่มประเมิน →</button>
+    <p style="font-size:12px;color:var(--a500);margin-top:14px">ใช้เวลาไม่ถึง 2 นาที &bull; ฟรี &bull; ไม่ต้องสมัคร</p>
+  </div>
+
+  <div class="befast-section">
+    <div class="sec-eyebrow">#WARNING SIGNS</div>
+    <div class="sec-sub" style="margin-bottom:16px">การสังเกต 6 อาการนี้ อาจช่วยชีวิตคนได้</div>
+    <div class="bf-grid">
+      <div class="bf-card"><div class="bf-letter">B</div><div class="bf-word">Balance</div></div>
+      <div class="bf-card"><div class="bf-letter">E</div><div class="bf-word">Eyes</div></div>
+      <div class="bf-card"><div class="bf-letter">F</div><div class="bf-word">Face</div></div>
+      <div class="bf-card"><div class="bf-letter">A</div><div class="bf-word">Arms</div></div>
+      <div class="bf-card"><div class="bf-letter">S</div><div class="bf-word">Speech</div></div>
+      <div class="bf-card"><div class="bf-letter">T</div><div class="bf-word">Time</div></div>
+    </div>
+  </div>
+
+  <div class="how-section">
+    <div class="sec-eyebrow">#HOW IT WORKS</div>
+    <div class="sec-title">ประเมินง่ายใน 3 ขั้นตอน</div>
+    <div class="steps">
+      <div class="step-row">
+        <div class="step-num">01</div>
+        <div class="step-body">
+          <h4>ตอบคำถาม 6 ข้อ</h4>
+          <p>ทำตามคำแนะนำแต่ละข้อของ BEFAST สังเกตอาการ และตอบคำถาม</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">02</div>
+        <div class="step-body">
+          <h4>รู้ผลทันที</h4>
+          <p>ระบบจะประเมินค่าคำตอบ และประเมินระดับความเสี่ยง โดยอ้างอิงจากเกณฑ์มาตรฐาน</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">03</div>
+        <div class="step-body">
+          <h4>ดำเนินการทันที</h4>
+          <p>หากพบสัญญาณของโรคหลอดเลือดสมอง ให้โทรฉุกเฉินทันที และจดเวลาที่เริ่มมีอาการ</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sev-section">
+    <div class="sec-eyebrow">#SEVERITY SCALE</div>
+    <div class="sec-title">ระดับความรุนแรง</div>
+    <div class="sev-grid">
+      <div class="sev-card c0">
+        <div class="sev-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="2"/>
+            <polyline points="8,14 12,18 20,10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="sev-score-name">0 - Minimal</div>
+        <div class="sev-desc">ไม่พบสัญญาณเตือน แนะให้เฝ้าสังเกตอาการต่อเนื่อง</div>
+      </div>
+      <div class="sev-card c1">
+        <div class="sev-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <rect x="3" y="3" width="22" height="22" rx="5" stroke="currentColor" stroke-width="2"/>
+            <line x1="9" y1="14" x2="19" y2="14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="sev-score-name">1 - Moderate</div>
+        <div class="sev-desc">พบสัญญาณเตือน 1 อาการ ควรรับการรักษาแพทย์</div>
+      </div>
+      <div class="sev-card c2">
+        <div class="sev-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <path d="M14 3L25 23H3L14 3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <line x1="14" y1="11" x2="14" y2="17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="14" cy="20" r="1.2" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="sev-score-name">2-3 - Severe</div>
+        <div class="sev-desc">พบหลายอาการ ควรได้รับการประเมินโดยแพทย์อย่างเร่งด่วน</div>
+      </div>
+      <div class="sev-card c3">
+        <div class="sev-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <path d="M14 2L26 14L14 26L2 14Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            <line x1="14" y1="10" x2="14" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="14" cy="19.5" r="1.2" fill="currentColor"/>
+          </svg>
+        </div>
+        <div class="sev-score-name">4-6 - Critical</div>
+        <div class="sev-desc">อาการเข้าข่ายโรคหลอดเลือดสมอง ต้องเข้ารับการรักษาทันที</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="home-cta">
+    <h3>สงสัยว่าอาจเป็นโรค<br><em>หลอดเลือดสมอง?</em></h3>
+    <p>อย่ารอช้า ใช้แบบประเมิน BEFAST ได้ทันที การตัดสินใจที่รวดเร็ว ช่วยลดความเสี่ยงของความพิการถาวร</p>
+    <button class="btn-cta" onclick="startQuiz()">เริ่มประเมิน →</button>
+  </div>
+  <div style="background:var(--p900);text-align:center;padding:14px;font-size:11px;font-weight:600;letter-spacing:.08em;color:rgba(255,255,255,.3)">© FASTLANE 2026</div>
+
+</div>
+
+<!-- ═══ QUIZ ═══ -->
+<div class="screen" id="s-quiz">
+  <div class="quiz-hd">
+    <div class="quiz-brand">
+      <span class="quiz-brand-name">FastLane</span>
+    </div>
+    <span class="quiz-brand-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <path d="M9 21h6M12 3a6 6 0 016 6c0 2.22-1.21 4.16-3 5.2V17H9v-2.8A6 6 0 0112 3z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </span>
+  </div>
+
+  <div class="quiz-body">
+    <div class="q-bulb">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <path d="M9 21h6M12 3a6 6 0 016 6c0 2.22-1.21 4.16-3 5.2V17H9v-2.8A6 6 0 0112 3z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="q-screen-title">แบบประเมิน BEFAST</div>
+    <div class="q-screen-sub">สังเกตอาการของผู้ป่วย และตอบคำถามแต่ละข้อ</div>
+    <div class="q-progress-row">
+      <span id="q-label-left">QUESTION 1 OF 6</span>
+      <span id="q-label-right">0% COMPLETE</span>
+    </div>
+    <div class="q-progress-bar"><div class="q-progress-fill" id="q-bar" style="width:0%"></div></div>
+    <div class="q-card">
+      <div class="q-steptag" id="q-tag">B · BALANCE</div>
+      <div class="q-title" id="q-title"></div>
+      <div class="opts" id="q-opts"></div>
+    </div>
+    <div class="q-btns">
+      <button class="btn-back" id="btn-back" onclick="quizBack()">‹ Back</button>
+      <button class="btn-next" id="btn-next" onclick="quizNext()" disabled>Next ›</button>
+    </div>
+  </div>
+  <div class="quiz-footer">© FASTLANE 2026</div>
+</div>
+
+<!-- ═══ RESULTS ═══ -->
+<div class="screen" id="s-result">
+  <div class="res-hd">
+    <span class="res-brand-r">FastLane</span>
+  </div>
+  <div class="res-wrap">
+    <!-- Score card -->
+    <div class="res-score-card">
+      <div class="res-score-top">
+        <span class="res-score-eyebrow">BEFAST SCORE</span>
+        <span class="res-timer-badge" id="r-timer">T · 00:00 MINUTES</span>
+      </div>
+      <div class="res-score-num" id="r-num">0</div>
+      <div class="res-score-sub">/6 SYMPTOMS</div>
+    </div>
+    <!-- Risk card -->
+    <div class="risk-card" id="r-banner">
+      <div class="risk-icon-circle" id="r-icon-circle"></div>
+      <div>
+        <div class="risk-label" id="r-label"></div>
+        <div class="risk-desc" id="r-desc"></div>
+      </div>
+    </div>
+    <!-- Assessment Summary -->
+    <div class="res-summary">
+      <div class="res-summary-hd">
+        <span class="res-summary-title">Assessment Summary</span>
+        <span class="res-count" id="r-count">0/6</span>
+      </div>
+      <div class="sum-rows" id="r-rows"></div>
+    </div>
+    <!-- Restart -->
+    <div class="res-actions">
+      <button class="btn-restart" onclick="restart()">เริ่มประเมินอีกครั้ง →</button>
+    </div>
+  </div>
+  <div class="res-footer-bar">© FASTLANE 2026</div>
+</div>
+
+</div>
+<script>
+const QS=[
+  {id:'B',step:'Balance',col:'#246040',
+   title:'มีอาการลุกยืน เดินเซ วิงเวียน หรือทรงตัวไม่ได้หรือไม่?',
+   yes:'ใช่ — พบอาการ',
+   no:'ไม่ — ไม่พบอาการผิดปกติ'},
+  {id:'E',step:'Eyes',col:'#156B6B',
+   title:'มีอาการตามัว มองเห็นภาพซ้อน หรือมองไม่เห็นข้างใดข้างหนึ่งหรือไม่?',
+   yes:'ใช่ — พบอาการ',
+   no:'ไม่ — ไม่พบอาการผิดปกติ'},
+  {id:'F',step:'Face',col:'#6B3590',
+   title:'มีอาการปากเบี้ยว หรือใบหน้าตกข้างใดข้างหนึ่งหรือไม่?',
+   yes:'ใช่ — พบอาการ',
+   no:'ไม่ — ไม่พบอาการผิดปกติ'},
+  {id:'A',step:'Arms',col:'#1E5FB8',
+   title:'มีอาการแขนอ่อนแรง ยกแขนไม่ขึ้น หรือแขนตกข้างใดข้างหนึ่งหรือไม่?',
+   yes:'ใช่ — พบอาการ',
+   no:'ไม่ — ไม่พบอาการผิดปกติ'},
+  {id:'S',step:'Speech',col:'#B86000',
+   title:'มีอาการพูดไม่ชัด พูดสับสน หรือพูดไม่ออกหรือไม่?',
+   yes:'ใช่ — พบอาการ',
+   no:'ไม่ — ไม่พบอาการผิดปกติ'},
+  {id:'T',step:'Time',col:'#B82020',
+   title:'อาการเหล่านี้เกิดขึ้นอย่างเฉียบพลัน ภายในไม่กี่ชั่วโมงที่ผ่านมาหรือไม่?',
+   yes:'ใช่ — อาการเกิดขึ้นเฉียบพลัน',
+   no:'ไม่ — อาการเป็นมาระยะหนึ่งแล้ว'}
+];
+
+let cur=0,ans={},startTime=null;
+
+function startQuiz(){cur=0;ans={};startTime=Date.now();show('s-quiz');render()}
+
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  const el=document.getElementById(id);
+  el.classList.add('active');
+  el.scrollTop=0;
+  document.querySelector('.phone').scrollTop=0;
+  window.scrollTo(0,0);
+}
+
+function render(){
+  const q=QS[cur];
+  const pct=Math.round((cur/QS.length)*100);
+  document.getElementById('q-label-left').textContent=`QUESTION ${cur+1} OF ${QS.length}`;
+  document.getElementById('q-bar').style.width=pct+'%';
+  document.getElementById('q-label-right').textContent=pct+'% COMPLETE';
+
+  const tag=document.getElementById('q-tag');
+  tag.textContent=`${q.id} · ${q.step.toUpperCase()}`;
+
+  document.getElementById('q-title').textContent=q.title;
+
+  const opts=document.getElementById('q-opts');
+  opts.innerHTML='';
+  [['yes',q.yes],['no',q.no]].forEach(([val,lbl])=>{
+    const b=document.createElement('button');
+    b.className='opt'+(ans[q.id]===val?' sel':'');
+    b.textContent=lbl;
+    b.onclick=()=>pick(q.id,val,b);
+    opts.appendChild(b);
+  });
+
+  const bn=document.getElementById('btn-next');
+  bn.disabled=ans[q.id]===undefined;
+  bn.textContent=cur===QS.length-1?'ดูผลลัพธ์ ›':'Next ›';
+  document.getElementById('btn-back').style.visibility='visible';
+}
+
+function pick(id,val,el){
+  ans[id]=val;
+  document.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+  el.classList.add('sel');
+  document.getElementById('btn-next').disabled=false;
+  quizNext();
+}
+
+function quizNext(){
+  if(ans[QS[cur].id]===undefined)return;
+  if(cur<QS.length-1){cur++;render()}else showResults();
+}
+
+function quizBack(){
+  if(cur>0){cur--;render()}else show('s-home');
+}
+
+function showResults(){
+  const elapsed=startTime?Math.floor((Date.now()-startTime)/1000):0;
+  const mm=String(Math.floor(elapsed/60)).padStart(2,'0');
+  const ss=String(elapsed%60).padStart(2,'0');
+  document.getElementById('r-timer').textContent=`T · ${mm}:${ss} MINUTES`;
+
+  const score=['B','E','F','A','S'].reduce((s,k)=>s+(ans[k]==='yes'?1:0),0);
+  const yesTotal=QS.reduce((s,q)=>s+(ans[q.id]==='yes'?1:0),0);
+  document.getElementById('r-num').textContent=score;
+  document.getElementById('r-count').textContent=`${yesTotal}/6`;
+
+  const checkSVG=`<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  const warnSVG=`<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 9v4M12 17h.01" stroke="white" stroke-width="2.5" stroke-linecap="round"/><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+  let cls,label,desc,svg;
+  if(score===0){
+    cls='minimal';label='0 - Minimal';svg=checkSVG;
+    desc='ไม่พบสัญญาณเตือน แนะนำให้เฝ้าสังเกตอาการต่อเนื่อง';
+  } else if(score===1){
+    cls='mod';label='1 - Moderate';svg=checkSVG;
+    desc='พบสัญญาณเตือน 1 อาการ ควรรับการรักษาแพทย์';
+  } else if(score<=3){
+    cls='severe';label=`${score} - Severe`;svg=warnSVG;
+    desc='พบอาการหลายอย่าง ควรได้รับการประเมินโดยแพทย์อย่างเร่งด่วน';
+  } else {
+    cls='critical';label=`${score} - Critical`;svg=warnSVG;
+    desc='อาการเข้าข่ายโรคหลอดเลือดสมอง ต้องเข้ารับการรักษาทันที';
+  }
+
+  const banner=document.getElementById('r-banner');
+  banner.className='risk-card '+cls;
+  document.getElementById('r-icon-circle').innerHTML=svg;
+  document.getElementById('r-label').textContent=label;
+  document.getElementById('r-desc').textContent=desc;
+
+  const rows=document.getElementById('r-rows');
+  rows.innerHTML='';
+  QS.forEach(q=>{
+    const isYes=ans[q.id]==='yes';
+    const isT=q.id==='T';
+    const r=document.createElement('div');
+    r.className='sum-row';
+    r.innerHTML=`
+      <div class="sum-letter">${q.id}</div>
+      <div class="sum-q">${q.title}</div>
+      <div class="sum-badge ${isYes?'yes':'no'}">${isYes?'YES':'NO'}</div>
+    `;
+    rows.appendChild(r);
+  });
+
+  show('s-result');
+}
+
+function restart(){show('s-home')}
+</script>
+</body>
+</html>
