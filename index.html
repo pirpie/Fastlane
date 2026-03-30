@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
 <title>FastLane — BEFAST Assessment</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@300;400;500;600;700;800&family=IBM+Plex+Sans:wght@300;400;500;600;700;800&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&display=swap" rel="stylesheet">
 <style>
@@ -69,6 +69,56 @@ html,body{
   border-radius:44px;
   overflow:hidden;
   box-shadow:0 40px 120px rgba(0,0,0,.7);
+}
+
+/* ── Responsive: real device fills the screen ── */
+@media (max-width:480px){
+  html,body{
+    display:block;
+    /* Dark bg fills the safe-area notch & home bar so no white flash */
+    background:var(--p900);
+    padding:0;
+    margin:0;
+    height:100%;
+  }
+  .phone{
+    width:100%;
+    border-radius:0;
+    box-shadow:none;
+    /* phone itself is white; gaps outside it show dark green */
+    background:var(--white);
+  }
+  /* Quiz fills the full viewport height */
+  #s-quiz{
+    height:100dvh !important;
+    overflow-y:auto;
+  }
+  /* Result scrolls freely */
+  #s-result{
+    min-height:100dvh;
+  }
+
+  /* Safe area — top: each screen's first dark band absorbs the notch */
+  .hero{
+    padding-top:calc(env(safe-area-inset-top,0px) + 24px) !important;
+  }
+  .quiz-hd{
+    padding-top:calc(env(safe-area-inset-top,0px) + 14px) !important;
+  }
+  .res-hd{
+    padding-top:calc(env(safe-area-inset-top,0px) + 20px) !important;
+  }
+
+  /* Safe area — bottom: footers reach the home indicator */
+  .home-cta{
+    padding-bottom:calc(env(safe-area-inset-bottom,0px) + 40px) !important;
+  }
+  .quiz-footer{
+    padding-bottom:calc(env(safe-area-inset-bottom,0px) + 14px) !important;
+  }
+  .res-footer-bar{
+    padding-bottom:calc(env(safe-area-inset-bottom,0px) + 14px) !important;
+  }
 }
 
 .screen{display:none}
@@ -205,9 +255,9 @@ html,body{
 .quiz-brand-icon{color:rgba(255,255,255,.75)}
 
 /* Quiz body */
-#s-quiz{min-height:852px}
+#s-quiz{min-height:min(852px,100dvh)}
 #s-quiz.active{display:flex;flex-direction:column}
-.quiz-body{flex:1;padding:20px 20px 0;background:#F4F9F7}
+.quiz-body{flex:1;min-height:0;padding:20px 20px 0;background:#F4F9F7}
 .q-card{background:var(--white);border:1.5px solid #C0E8D2;border-radius:16px;padding:20px;margin-bottom:16px}
 
 .q-bulb{
